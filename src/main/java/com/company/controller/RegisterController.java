@@ -10,7 +10,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet(name = "register", value = "/register")
+@WebServlet(name = "RegisterController", value = "/register")
 public class RegisterController extends HttpServlet {
     public UserDao userDao;
 
