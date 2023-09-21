@@ -4,7 +4,9 @@ import com.company.entity.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserDAO implements DAO<User> {
@@ -33,16 +35,66 @@ public class UserDAO implements DAO<User> {
 
     @Override
     public void remove(int id) {
+        String query = "delete from \"users\" where id=?";
+        try {
+            PreparedStatement st = connection.prepareStatement(query);
+            st.setInt(1, id);
+            ResultSet rs = st.executeQuery();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
 
     }
 
     @Override
     public User get(int id) {
-        return null;
+        User user = null;
+        String query = "select id, name, surname, email, password, gender, imgurl from \"users\" where id=?";
+        System.out.println(user.getId());
+        try {
+            PreparedStatement st = connection.prepareStatement(query);
+            st.setInt(1, id);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                user = new User(
+                        rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getString("surname"),
+                        rs.getString("email"),
+                        rs.getString("password"),
+                        rs.getBoolean("gender"),
+                        rs.getString("imgurl"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return user;
     }
 
     @Override
     public List<User> getAll() {
-        return null;
+        List<User> users = new ArrayList<>();
+        String query = "select * from \"users\"";
+        try {
+            PreparedStatement statement = connection.prepareStatement(query);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                String surname = rs.getString("surname");
+                String email = rs.getString("email");
+                String password = rs.getString("password");
+                boolean gender = rs.getBoolean("gender");
+                String imgurl = rs.getString("imgurl");
+                users.add(new User(id, name, surname, email, password, gender, imgurl));
+            }
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return users;
     }
 }

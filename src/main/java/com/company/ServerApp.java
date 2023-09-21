@@ -2,6 +2,7 @@ package com.company;
 
 
 import com.company.DB.DBConnection;
+import com.company.servlet.LoginServlet;
 import com.company.servlet.RegisterServlet;
 import com.company.servlet.StaticFileServlet;
 import org.eclipse.jetty.server.Server;
@@ -27,9 +28,9 @@ public class ServerApp {
 //        handler.addFilter(LoginFilter.class,"/logout", dt);
 
         handler.addServlet(StaticFileServlet.class, "/*");
-        handler.addServlet(new ServletHolder(new RegisterServlet(connection)), "/reg");
-//        handler.addServlet(new ServletHolder(new LoginServlet(connection)), "/login");
-//        handler.addServlet(new ServletHolder(new UserServlet(connection)), "/users");
+        handler.addServlet(new ServletHolder(new RegisterServlet(connection)), "/register");
+        handler.addServlet(new ServletHolder(new LoginServlet(connection)), "/login");
+        handler.addServlet(new ServletHolder(new UserServlet(connection)), "/users");
 //        handler.addServlet(new ServletHolder(new LikeServlet(connection)), "/liked");
 //        handler.addServlet(new ServletHolder(new MessageServlet(connection)), "/message");
 //        handler.addServlet(new ServletHolder(new LogoutServlet()), "/logout");
