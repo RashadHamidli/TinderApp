@@ -1,31 +1,32 @@
 package com.company.dao;
 
-import com.company.db.DBConnect;
 import com.company.entity.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 
-public class UserDao implements Dao<User> {
+public class UserDAO implements DAO<User> {
     private final Connection connection;
 
-    public UserDao(Connection connection) {
+    public UserDAO(Connection connection) {
         this.connection = connection;
     }
 
     @Override
     public void add(User user) {
-        String query = "INSERT INTO users (name, surname, email, password) VALUES (?, ?, ?, ?)";
+        String query = "insert into \"users\" (email, password, name, surname, gender, imgurl) values (?, ?, ?, ?, ?, ?)";
         try {
             PreparedStatement st = connection.prepareStatement(query);
-            st.setString(1, user.getName());
-            st.setString(2, user.getSurname());
-            st.setString(3, user.getEmail());
-            st.setString(4, user.getPassword());
-            st.executeUpdate();
-            connection.close();
-        } catch (Exception e) {
+            st.setString(1, user.getEmail());
+            st.setString(2, user.getPassword());
+            st.setString(3, user.getName());
+            st.setString(4, user.getSurname());
+            st.setBoolean(5, user.getGender());
+            st.setString(6, user.getImgurl());
+            st.execute();
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
