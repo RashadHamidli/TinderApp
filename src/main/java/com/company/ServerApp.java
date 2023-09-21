@@ -5,6 +5,7 @@ import com.company.DB.DBConnection;
 import com.company.servlet.LoginServlet;
 import com.company.servlet.RegisterServlet;
 import com.company.servlet.StaticFileServlet;
+import com.company.servlet.UserServlet;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;

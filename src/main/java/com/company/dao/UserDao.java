@@ -51,7 +51,6 @@ public class UserDAO implements DAO<User> {
     public User get(int id) {
         User user = null;
         String query = "select id, name, surname, email, password, gender, imgurl from \"users\" where id=?";
-        System.out.println(user.getId());
         try {
             PreparedStatement st = connection.prepareStatement(query);
             st.setInt(1, id);

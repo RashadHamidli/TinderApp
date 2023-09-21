@@ -1,13 +1,9 @@
 package com.company.servlet;
 
-import Dao.LikeDao;
-import Dao.UserDao;
-import Entities.Like;
-import Entities.User;
-import Services.CookieService;
-import Services.LikeService;
-import Services.UserService;
-import Utils.FreemarkerEngine;
+import com.company.Utils.FreemarkerEngine;
+import com.company.controller.UserController;
+import com.company.dao.UserDAO;
+import com.company.entity.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -21,22 +17,22 @@ import java.util.List;
 public class UserServlet extends HttpServlet {
 
     private final Connection connection;
-    private UserService userService;
-    private LikeService likeService;
+    private UserController userController;
+//    private LikeService likeService;
     private final FreemarkerEngine f = new FreemarkerEngine();
-    private CookieService ck;
+//    private CookieService ck;
     private static int counter = 0;
     public UserServlet(Connection connection) {
         this.connection = connection;
-        this.userService = new UserService(new UserDao(connection));
-        this.likeService = new LikeService(new LikeDao(connection));
+        this.userController = new UserController(new UserDAO(connection));
+//        this.likeService = new LikeService(new LikeDao(connection));
     }
 
     @Override
     protected void doGet(HttpServletRequest rq, HttpServletResponse rs) throws ServletException, IOException {
-        ck = new CookieService(rq, rs);
-        int id = Integer.parseInt(ck.getCookie().getValue());
-        List<User> allUsers = userService.getAllUsers(id);
+//        ck = new CookieService(rq, rs);
+//        int id = Integer.parseInt(ck.getCookie().getValue());
+        List<User> allUsers = userController.getAllUsers(1);/////
         User user = allUsers.get(counter++);
         HashMap<String, Object> data = new HashMap<>();
         data.put("user", user);
@@ -46,27 +42,27 @@ public class UserServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest rq, HttpServletResponse rs) throws ServletException, IOException {
 
-        ck = new CookieService(rq, rs);
-        int likerId = Integer.parseInt(ck.getCookie().getValue());
-        int likedId = Integer.parseInt(rq.getParameter("likedId"));
-        Like like = new Like(likerId, likedId);
-
-        if (rq.getParameter("like") != null) {
-            likeService.addLike(like);
-        }
-        else if (rq.getParameter("dislike") != null){
-            if(likeService.isLikeExist(like)){
-                likeService.removeLike(likeService.getLikeId(like));
-            }
-        }
-
-
-        if(counter == userService.getAllUsers(likerId).size()){
-            counter = 0;
-            rs.sendRedirect("/liked");
-        }
-        else{
-            doGet(rq, rs);
-        }
+//        ck = new CookieService(rq, rs);
+//        int likerId = Integer.parseInt(ck.getCookie().getValue());
+//        int likedId = Integer.parseInt(rq.getParameter("likedId"));
+//        Like like = new Like(likerId, likedId);
+//
+//        if (rq.getParameter("like") != null) {
+//            likeService.addLike(like);
+//        }
+//        else if (rq.getParameter("dislike") != null){
+//            if(likeService.isLikeExist(like)){
+//                likeService.removeLike(likeService.getLikeId(like));
+//            }
+//        }
+//
+//
+//        if(counter == userController.getAllUsers(likerId).size()){
+//            counter = 0;
+//            rs.sendRedirect("/liked");
+//        }
+//        else{
+//            doGet(rq, rs);
+//        }
     }
 }
