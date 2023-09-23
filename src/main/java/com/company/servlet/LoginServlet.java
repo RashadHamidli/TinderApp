@@ -1,6 +1,7 @@
 package com.company.servlet;
 
 import com.company.Utils.FreemarkerEngine;
+import com.company.controller.CookieController;
 import com.company.controller.UserController;
 import com.company.dao.UserDAO;
 import com.company.entity.User;
@@ -19,7 +20,7 @@ public class LoginServlet extends HttpServlet {
     private UserController userController;
     private final FreemarkerEngine f = new FreemarkerEngine();
 
-//    private CookieService cookieService;
+    private CookieController cookieController;
 
     public LoginServlet(Connection connection) {
         this.connection = connection;
@@ -41,8 +42,8 @@ public class LoginServlet extends HttpServlet {
         User user = new User(email, password);
 
 //        int uID = userController.getUserId(user);
-//        cookieService = new CookieService(rq, rs);
-//        cookieService.addCookie(uID);
+//        cookieController = new CookieController(rq, rs);
+//        cookieController.addCookie(uID);
         rs.sendRedirect("/users");
 
     }

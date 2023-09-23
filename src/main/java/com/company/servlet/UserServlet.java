@@ -20,7 +20,7 @@ public class UserServlet extends HttpServlet {
     private UserController userController;
 //    private LikeService likeService;
     private final FreemarkerEngine f = new FreemarkerEngine();
-//    private CookieService ck;
+//    private CookieController ck;
     private static int counter = 0;
     public UserServlet(Connection connection) {
         this.connection = connection;
@@ -30,7 +30,7 @@ public class UserServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest rq, HttpServletResponse rs) throws ServletException, IOException {
-//        ck = new CookieService(rq, rs);
+//        ck = new CookieController(rq, rs);
 //        int id = Integer.parseInt(ck.getCookie().getValue());
         List<User> allUsers = userController.getAllUsers(1);/////
         User user = allUsers.get(counter++);
@@ -42,7 +42,7 @@ public class UserServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest rq, HttpServletResponse rs) throws ServletException, IOException {
 
-//        ck = new CookieService(rq, rs);
+//        ck = new CookieController(rq, rs);
 //        int likerId = Integer.parseInt(ck.getCookie().getValue());
 //        int likedId = Integer.parseInt(rq.getParameter("likedId"));
 //        Like like = new Like(likerId, likedId);
