@@ -8,7 +8,7 @@ public class MessageDAO implements DAO<Message>{
 
     @Override
     public void add(Message message) {
-//        String query="insert into \"message\" ("
+        String query="insert into \"message\" ()";
     }
 
     @Override
