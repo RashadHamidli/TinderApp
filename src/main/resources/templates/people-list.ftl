@@ -28,27 +28,27 @@
                     <div class="table-container">
                         <table class="table-users table" border="0">
                             <tbody>
-                            <#list users as user1>
+                            <#list users as user>
                                 <tr>
                                     <td width="10">
                                         <div class="avatar-img">
                                             <img alt="no img" class="img-circle"
-                                                 src="${user1.imgurl}"/>
+                                                 src="${user.imgurl}"/>
                                         </div>
 
                                     </td>
                                     <td class="align-middle">
-                                        ${user1.name} ${user1.surname}
+                                        ${user.name} ${user.surname}
                                     </td>
                                     <td class="align-middle">
-                                        ${user1.gender?then("Male", "Female")}
+                                        ${user.gender?then("Male", "Female")}
                                     </td>
                                     <td class="align-middle">
-                                        You liked this user1
+                                        You liked this user
                                     </td>
                                     <td class="align-middle">
                                         <form action="/message" method="get">
-                                            <input type="hidden" name="recId" value="${user1.id}">
+                                            <input type="hidden" name="recId" value="${user.id}">
                                             <button style="cursor: pointer" type="submit">Send message</button>
                                         </form>
                                     </td>

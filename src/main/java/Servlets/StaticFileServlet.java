@@ -1,4 +1,4 @@
-package com.company.servlet;
+package Servlets;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;

@@ -1,26 +1,34 @@
-package com.company.servlet;
+package Servlets;
 
-import com.company.Utils.FreemarkerEngine;
-import com.company.controller.UserController;
-import com.company.dao.UserDAO;
-import com.company.entity.User;
+import Dao.UserDao;
+import Entities.User;
+import Services.UserService;
+import Utils.FreemarkerEngine;
+import freemarker.template.Configuration;
+import freemarker.template.TemplateException;
 
 import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.sql.Connection;
 import java.util.HashMap;
 
 public class RegisterServlet extends HttpServlet {
     private final Connection connection;
-    private UserController userController;
+    private UserService userService;
     private final FreemarkerEngine f = new FreemarkerEngine();
 
     public RegisterServlet(Connection connection) {
         this.connection = connection;
-        this.userController = new UserController(new UserDAO(connection));
+        this.userService = new UserService(new UserDao(connection));
     }
 
     @Override
@@ -30,6 +38,8 @@ public class RegisterServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest rq, HttpServletResponse rs) throws ServletException, IOException {
+
+
         String email = rq.getParameter("email");
         String password = rq.getParameter("password");
         String name = rq.getParameter("name");
@@ -39,9 +49,8 @@ public class RegisterServlet extends HttpServlet {
         String imgUrl = rq.getParameter("imgUrl");
         User user = new User(email, password, name, surname, genderB, imgUrl);
 
-        userController.addUser(user);
+        userService.addUser(user);
 
         rs.sendRedirect("/login");
     }
-
 }

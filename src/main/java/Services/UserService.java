@@ -1,24 +1,26 @@
-package com.company.controller;
+package Services;
 
-import com.company.dao.UserDAO;
-import com.company.entity.User;
+import Dao.LikeDao;
+import Dao.UserDao;
+import Entities.Like;
+import Entities.User;
 
 import java.sql.Connection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class UserController {
-    private UserDAO userDao;
+public class UserService {
+    private UserDao userDao;
 
-//    private LikeService likeService;
+    private LikeService likeService;
 
-    public UserController(UserDAO userDao) {
+    public UserService(UserDao userDao) {
         this.userDao = userDao;
     }
 
-    public UserController(Connection connection, UserDAO userDao) {
+    public UserService(Connection connection, UserDao userDao) {
         this.userDao = userDao;
-//        likeService = new LikeService(new LikeDao(connection));
+        likeService = new LikeService(new LikeDao(connection));
     }
 
     public void addUser(User user){
@@ -42,9 +44,11 @@ public class UserController {
         return userDao.getAll().stream().filter(u -> u.getId() != id).collect(Collectors.toList());
     }
 
-//    public List<User> getLikedUsers(int id, List<Like> likes){
-//        return likes.stream().map(l -> getUser(l.getLikedId())).collect(Collectors.toList());
-//    }
+    public List<User> getLikedUsers(int id, List<Like> likes){
+        return likes.stream().map(l -> getUser(l.getLikedId())).collect(Collectors.toList());
+    }
+
+
 
 
 }

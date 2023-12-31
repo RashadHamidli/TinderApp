@@ -1,4 +1,4 @@
-package com.company.Utils;
+package Utils;
 
 import freemarker.template.Configuration;
 import freemarker.template.TemplateException;
@@ -12,7 +12,9 @@ import java.util.HashMap;
 
 public class FreemarkerEngine {
 
+
     public FreemarkerEngine() {
+
     }
 
     public void render(HttpServletResponse rs, String tmplName, HashMap<String, Object> data) throws IOException {

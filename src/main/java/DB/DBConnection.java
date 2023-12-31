@@ -1,4 +1,4 @@
-package com.company.DB;
+package DB;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -6,9 +6,9 @@ import java.sql.SQLException;
 
 public class DBConnection {
 
-    private static final String URL = "jdbc:postgresql://localhost:5432/tinder";
+    private static final String URL = "jdbc:postgresql://localhost:5432/postgres";
     private static final String UNAME = "postgres";
-    private static final String PWD = "admin";
+    private static final String PWD = "postgres";
 
     private static Connection connection;
 

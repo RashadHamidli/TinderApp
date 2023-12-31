@@ -39,7 +39,7 @@
                     <div class="row header-two w-100">
                         <div class="col-md-6 options-left pl-1">
                             <i class="fa fa-video-camera mr-3"></i>
-                            <i class="fa fa-user1-plus"></i>
+                            <i class="fa fa-user-plus"></i>
                         </div>
                         <div class="col-md-6 options-right text-right pr-2">
                             <i class="fa fa-cog"></i>

@@ -1,11 +1,10 @@
-package com.company.servlet;
+package Servlets;
 
-import com.company.Utils.FreemarkerEngine;
-import com.company.controller.CookieController;
-import com.company.controller.UserController;
-import com.company.dao.UserDAO;
-import com.company.entity.User;
-
+import Dao.UserDao;
+import Entities.User;
+import Services.CookieService;
+import Services.UserService;
+import Utils.FreemarkerEngine;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,14 +16,14 @@ import java.util.HashMap;
 public class LoginServlet extends HttpServlet {
 
     private final Connection connection;
-    private UserController userController;
+    private UserService userService;
     private final FreemarkerEngine f = new FreemarkerEngine();
 
-    private CookieController cookieController;
+    private CookieService cookieService;
 
     public LoginServlet(Connection connection) {
         this.connection = connection;
-        this.userController = new UserController(new UserDAO(connection));
+        this.userService = new UserService(new UserDao(connection));
     }
 
     @Override
@@ -41,9 +40,9 @@ public class LoginServlet extends HttpServlet {
         String password = rq.getParameter("password");
         User user = new User(email, password);
 
-//        int uID = userController.getUserId(user);
-//        cookieController = new CookieController(rq, rs);
-//        cookieController.addCookie(uID);
+        int uID = userService.getUserId(user);
+        cookieService = new CookieService(rq, rs);
+        cookieService.addCookie(uID);
         rs.sendRedirect("/users");
 
     }

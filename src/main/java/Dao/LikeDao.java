@@ -1,6 +1,6 @@
-package com.company.dao;
+package Dao;
 
-import com.company.entity.Like;
+import Entities.Like;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,56 +9,54 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LikeDAO implements DAO<Like> {
-    private final Connection connection;
+public class LikeDao implements DAO<Like>{
 
-    public LikeDAO(Connection connection) {
+    private Connection connection;
+
+    public LikeDao(Connection connection) {
         this.connection = connection;
     }
 
     @Override
     public void add(Like like) {
-        String query = "insert into \"like\" (liker_id, liked_id) values (?,?) ";
-        try {
+        String query = "insert into \"likes\" (liker_id, liked_id) values (?, ?)";
+        try{
             PreparedStatement st = connection.prepareStatement(query);
             st.setInt(1, like.getLikerId());
             st.setInt(2, like.getLikedId());
-        } catch (SQLException e) {
+            st.execute();
+        } catch (SQLException e){
             throw new RuntimeException(e);
         }
+
     }
 
     @Override
     public void remove(int id) {
-        String query = "delete from \"like\" where id=?";
-        try {
+        String query = "delete from \"likes\" where id = ?";
+
+        try{
             PreparedStatement st = connection.prepareStatement(query);
             st.setInt(1, id);
-            ResultSet rs = st.executeQuery();
-
-        } catch (SQLException e) {
+            st.execute();
+        } catch (SQLException e){
             throw new RuntimeException(e);
         }
-
-
     }
 
     @Override
     public Like get(int id) {
         Like like = null;
-        String query = "select id,liker_id, liked_id from \"like\" where id=?";
-        try {
+        String query = "select id, liker_id, liked_id from \"likes\" where id = ?";
+
+        try{
             PreparedStatement st = connection.prepareStatement(query);
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
-            if (rs.next()) {
-                like = new Like(
-                        rs.getInt("id"),
-                        rs.getInt("liker_id"),
-                        rs.getInt("liked_id"));
+            if(rs.next()){
+                like = new Like(rs.getInt("id"), rs.getInt("liker_id"), rs.getInt("liked_id"));
             }
-
-        } catch (SQLException e) {
+        } catch (SQLException e){
             throw new RuntimeException(e);
         }
 
@@ -68,19 +66,18 @@ public class LikeDAO implements DAO<Like> {
     @Override
     public List<Like> getAll() {
         List<Like> likes = new ArrayList<>();
-        String query = "select * from \"like\"";
-        try {
+        String query = "select * from \"likes\" ";
+
+        try{
             PreparedStatement st = connection.prepareStatement(query);
             ResultSet rs = st.executeQuery();
-            while (rs.next()) {
-                int id = rs.getInt("id");
-                int likerId = rs.getInt("liker_id");
-                int likedId = rs.getInt("liked_id");
-                likes.add(new Like(id, likerId, likedId));
+            while(rs.next()){
+                likes.add(new Like(rs.getInt("id"), rs.getInt("liker_id"), rs.getInt("liked_id")));
             }
-        } catch (SQLException e) {
+        } catch (SQLException e){
             throw new RuntimeException(e);
         }
+
         return likes;
     }
 }

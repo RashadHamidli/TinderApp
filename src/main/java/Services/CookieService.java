@@ -1,17 +1,18 @@
-package com.company.controller;
+package Services;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
+import java.util.Optional;
 
-public class CookieController {
+public class CookieService {
 
-    private final String USER_ID = "id";
+    private final String USER_ID = "user_id";
     HttpServletRequest rq;
     HttpServletResponse rs;
 
-    public CookieController(HttpServletRequest rq, HttpServletResponse rs) {
+    public CookieService(HttpServletRequest rq, HttpServletResponse rs) {
         this.rq = rq;
         this.rs = rs;
     }
